@@ -16,6 +16,8 @@ if not REPLICATE_KEY:
 client = replicate.Client(api_token=REPLICATE_KEY)
 
 stylowe_ubrania = [
+    "brak ubrań",
+    "koronkowe czerwone body"
     "czarna skórzana kurtka i dżinsy",
     "elegancka jedwabna suknia wieczorowa",
     "casualowy, lniany garnitur w odcieniu beżu",
