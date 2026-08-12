@@ -7,7 +7,6 @@ st.set_page_config(page_title="Generator Modelki AI", page_icon="📸")
 st.title("📸 Generator Realistycznej Modelki AI")
 st.write("Wybierz styl, a model stworzy fotorealistyczną postać.")
 
-# Pobieranie klucza z ustawień Streamlit Cloud
 REPLICATE_KEY = st.secrets.get("REPLICATE_API_TOKEN", os.environ.get("REPLICATE_API_TOKEN", ""))
 
 if not REPLICATE_KEY:
@@ -68,7 +67,16 @@ if st.button("🌟 GENERUJ MODELKĘ"):
                     "output_quality": 95
                 }
             )
+            
+            # Pobieramy bajty ze zwróconego strumienia pliku
+            if hasattr(output, "read"):
+                image_data = output.read()
+            elif isinstance(output, list) and len(output) > 0:
+                image_data = output[0]
+            else:
+                image_data = str(output)
+
             st.success("Wygenerowano!")
-            st.image(output, caption="Modelka AI", use_container_width=True)
+            st.image(image_data, caption="Modelka AI", use_container_width=True)
         except Exception as e:
             st.error(f"Błąd: {e}")
